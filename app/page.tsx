@@ -30,7 +30,7 @@ export default function Home() {
     }
   };
 
-  const deleteFlashcard = (index) => {
+  const deleteFlashcard = (index: number) => {
     setFlashcards(flashcards.filter((_, i) => i !== index));
     setCurrentIndex(0);
   };
