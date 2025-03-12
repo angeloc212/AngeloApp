@@ -2,13 +2,17 @@ import { useState } from "react";
 
 export default function Home() {
   const [flashcards, setFlashcards] = useState([
-    { question: "What is React?", answer: "A JavaScript library for building user interfaces." },
-    { question: "What is Next.js?", answer: "A React framework for production applications." },
+    { question: "Who is the protagonist of Solo Leveling?", answer: "Sung Jin-Woo." },
+    { question: "What is Sung Jin-Woo's special ability?", answer: "The ability to level up and gain strength infinitely." },
+    { question: "What is the name of the system that grants Jin-Woo power?", answer: "The System." },
+    { question: "Who is the Monarch of Shadows?", answer: "Sung Jin-Woo after inheriting Ashborn's power." },
   ]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [newQuestion, setNewQuestion] = useState("");
   const [newAnswer, setNewAnswer] = useState("");
+  const [correctCount, setCorrectCount] = useState(0);
+  const [incorrectCount, setIncorrectCount] = useState(0);
 
   const nextCard = () => {
     setShowAnswer(false);
@@ -22,12 +26,20 @@ export default function Home() {
       setNewAnswer("");
     }
   };
- 
 
-  
-  const deleteFlashcard = (index: number) => {
+  const deleteFlashcard = (index) => {
     setFlashcards(flashcards.filter((_, i) => i !== index));
     setCurrentIndex(0);
+  };
+
+  const markCorrect = () => {
+    setCorrectCount(correctCount + 1);
+    nextCard();
+  };
+
+  const markIncorrect = () => {
+    setIncorrectCount(incorrectCount + 1);
+    nextCard();
   };
 
   return (
@@ -41,8 +53,22 @@ export default function Home() {
         >
           {showAnswer ? "Hide Answer" : "Show Answer"}
         </button>
+        <div className="mt-4 flex gap-2">
+          <button
+            className="px-4 py-2 bg-green-500 text-white rounded-lg"
+            onClick={markCorrect}
+          >
+            Correct
+          </button>
+          <button
+            className="px-4 py-2 bg-red-500 text-white rounded-lg"
+            onClick={markIncorrect}
+          >
+            Incorrect
+          </button>
+        </div>
         <button
-          className="mt-2 px-4 py-2 bg-green-500 text-white rounded-lg"
+          className="mt-2 px-4 py-2 bg-gray-500 text-white rounded-lg"
           onClick={nextCard}
         >
           Next Card
@@ -54,6 +80,7 @@ export default function Home() {
         >
           Delete Card
         </button>
+        <p className="mt-4 text-sm">Correct: {correctCount} | Incorrect: {incorrectCount}</p>
       </div>
       <div className="w-96 mt-6 p-4 bg-white rounded-lg shadow-lg">
         <h3 className="text-lg font-bold">Add Flashcard</h3>
