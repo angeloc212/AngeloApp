@@ -22,7 +22,9 @@ export default function Home() {
       setNewAnswer("");
     }
   };
+ 
 
+  
   const deleteFlashcard = (index: number) => {
     setFlashcards(flashcards.filter((_, i) => i !== index));
     setCurrentIndex(0);
